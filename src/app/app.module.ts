@@ -16,6 +16,7 @@ import { LoginProvider } from '../providers/login/login';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { ProfilePageModule } from '../pages/profile/profile.module';
+import { RegisterPageModule } from '../pages/register/register.module';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ProfilePageModule } from '../pages/profile/profile.module';
     UsersPageModule,
     DetailPageModule,
     LoginPageModule,
-    ProfilePageModule
+    ProfilePageModule,
+    RegisterPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

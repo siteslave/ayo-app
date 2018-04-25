@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { RegisterPage } from '../register/register';
 
 /**
  * Generated class for the ProfilePage page.
@@ -32,5 +33,9 @@ export class ProfilePage {
     }).catch(err => {
       console.log('Error', err);
     });
+  }
+
+  doRegister() {
+    this.navCtrl.push(RegisterPage)
   }
 }
