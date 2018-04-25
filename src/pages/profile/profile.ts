@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, AlertController } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { RegisterPage } from '../register/register';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
@@ -18,12 +18,15 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 })
 export class ProfilePage {
 
+  cid: any;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private barcodeScanner: BarcodeScanner,
     private platform: Platform,
-    private sqlite: SQLite
+    private sqlite: SQLite,
+    private alertCtrl: AlertController
   ) {
   }
 
@@ -32,11 +35,27 @@ export class ProfilePage {
   }
 
   doScan() {
-    this.barcodeScanner.scan().then(barcodeData => {
-      console.log('Barcode data', barcodeData);
-    }).catch(err => {
-      console.log('Error', err);
-    });
+    if (this.cid) {
+      this.barcodeScanner.scan().then(barcodeData => {
+        console.log('Barcode data', barcodeData);
+        let alert = this.alertCtrl.create({
+          title: 'สำเร็จ!',
+          subTitle: 'ลงทะเบียนเสร็จเรียบร้อย : ' + barcodeData.text + '?cid=' + this.cid,
+          buttons: ['ตกลง']
+        });
+        alert.present();
+
+      }).catch(err => {
+        console.log('Error', err);
+      });
+    } else {
+      let alert = this.alertCtrl.create({
+        title: 'เกิดข้อผิดพลาด!',
+        subTitle: 'ไม่พบเลขบัตรประชาชน',
+        buttons: ['ตกลง']
+      });
+      alert.present();
+    }
   }
 
   doRegister() {
@@ -58,11 +77,10 @@ export class ProfilePage {
 
           db.executeSql(sql, [])
             .then((res: any) => {
-              console.log(res);
               let rows = res.rows;
               if (rows.length > 0) {
                 for (let i = 0; i < rows.length; i++) {
-                  console.log(rows.item(i).cid);
+                  this.cid = rows.item(i).cid;
                 }
               }
             })

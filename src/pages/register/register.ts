@@ -10,6 +10,7 @@ import { SQLiteObject, SQLite } from '@ionic-native/sqlite';
 export class RegisterPage {
 
   cid: any;
+  isUpdate: boolean;
 
   constructor(
     public navCtrl: NavController,
@@ -27,10 +28,18 @@ export class RegisterPage {
       })
         .then((db: SQLiteObject) => {
 
-          let sql = `
+          let sql = null;
+          
+          if (this.isUpdate) {
+            sql = `
+            UPDATE profile SET cid=?;
+            `;
+          } else {
+            sql = `
             INSERT INTO profile(cid)
             VALUES(?);
             `;
+          }
 
           db.executeSql(sql, [this.cid])
             .then(() => this.navCtrl.pop())
@@ -60,12 +69,14 @@ export class RegisterPage {
 
           db.executeSql(sql, [])
             .then((res: any) => {
-              console.log(res);
               let rows = res.rows;
               if (rows.length > 0) {
+                this.isUpdate = true;
                 for (let i = 0; i < rows.length; i++) {
                   this.cid = rows.item(i).cid;
                 }
+              } else {
+                this.isUpdate = false;
               }
             })
             .catch(e => console.log(e));
