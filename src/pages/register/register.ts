@@ -28,18 +28,13 @@ export class RegisterPage {
         .then((db: SQLiteObject) => {
 
           let sql = `
-              CREATE TABLE IF NOT EXISTS profile(
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                cid TEXT,
-                hn TEXT,
-                hospcode TEXT,
-                url TEXT)
+            INSERT INTO profile(cid)
+            VALUES(?);
             `;
 
-          db.executeSql(sql, {})
-            .then(() => console.log('Executed SQL'))
+          db.executeSql(sql, [this.cid])
+            .then(() => this.navCtrl.pop())
             .catch(e => console.log(e));
-
 
         })
         .catch(e => console.log(e));

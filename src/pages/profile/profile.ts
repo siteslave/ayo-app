@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { RegisterPage } from '../register/register';
+import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 
 /**
  * Generated class for the ProfilePage page.
@@ -20,11 +21,14 @@ export class ProfilePage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private barcodeScanner: BarcodeScanner) {
+    private barcodeScanner: BarcodeScanner,
+    private platform: Platform,
+    private sqlite: SQLite
+  ) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ProfilePage');
+    this.getCid();
   }
 
   doScan() {
@@ -38,4 +42,27 @@ export class ProfilePage {
   doRegister() {
     this.navCtrl.push(RegisterPage)
   }
+
+  getCid() {
+    this.platform.ready().then(() => {
+
+      this.sqlite.create({
+        name: 'drugnotify.db',
+        location: 'default'
+      })
+        .then((db: SQLiteObject) => {
+
+          let sql = `
+            SELECT cid FROM profile LIMIT 1;
+            `;
+
+          db.executeSql(sql, [])
+            .then((res: any) => console.log(res))
+            .catch(e => console.log(e));
+
+        })
+        .catch(e => console.log(e));
+    });
+  }
+
 }
