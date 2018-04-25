@@ -27,7 +27,7 @@ export class ProfilePage {
   ) {
   }
 
-  ionViewDidLoad() {
+  ionViewWillEnter() {
     this.getCid();
   }
 
@@ -53,11 +53,19 @@ export class ProfilePage {
         .then((db: SQLiteObject) => {
 
           let sql = `
-            SELECT cid FROM profile LIMIT 1;
+            SELECT cid FROM profile;
             `;
 
           db.executeSql(sql, [])
-            .then((res: any) => console.log(res))
+            .then((res: any) => {
+              console.log(res);
+              let rows = res.rows;
+              if (rows.length > 0) {
+                for (let i = 0; i < rows.length; i++) {
+                  console.log(rows.item(i).cid);
+                }
+              }
+            })
             .catch(e => console.log(e));
 
         })
