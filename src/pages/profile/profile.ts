@@ -53,7 +53,7 @@ export class ProfilePage {
         .then((db: SQLiteObject) => {
 
           let sql = `
-            SELECT cid FROM profile;
+            SELECT cid FROM profile LIMIT 1;
             `;
 
           db.executeSql(sql, [])

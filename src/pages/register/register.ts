@@ -41,4 +41,38 @@ export class RegisterPage {
     });
   }
 
+  ionViewWillEnter() {
+    this.getCid();
+  }
+
+  getCid() {
+    this.platform.ready().then(() => {
+
+      this.sqlite.create({
+        name: 'drugnotify.db',
+        location: 'default'
+      })
+        .then((db: SQLiteObject) => {
+
+          let sql = `
+            SELECT cid FROM profile LIMIT 1;
+            `;
+
+          db.executeSql(sql, [])
+            .then((res: any) => {
+              console.log(res);
+              let rows = res.rows;
+              if (rows.length > 0) {
+                for (let i = 0; i < rows.length; i++) {
+                  this.cid = rows.item(i).cid;
+                }
+              }
+            })
+            .catch(e => console.log(e));
+
+        })
+        .catch(e => console.log(e));
+    });
+  }
+
 }
