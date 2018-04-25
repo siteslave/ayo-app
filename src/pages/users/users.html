@@ -1,0 +1,30 @@
+<!--
+  Generated template for the UsersPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="purple">
+    <ion-title>Users</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <ion-list>
+    <button ion-item *ngFor="let user of users" (click)="getDetail(user)">
+      
+      <ion-avatar item-start>
+        <img [src]="user.img">
+      </ion-avatar>
+      <h2>{{user.first_name}} {{user.last_name}}</h2>
+      <p>{{user.university}}</p>
+
+    </button>
+  </ion-list>
+
+</ion-content>

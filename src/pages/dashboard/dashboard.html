@@ -1,0 +1,43 @@
+
+<ion-header>
+
+  <ion-navbar color="purple">
+    <ion-title>Dashboard</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  {{ name }}
+
+  Welcome: {{ username }}
+
+  <ion-list>
+  
+    <ion-item>
+      <ion-label floating>Username</ion-label>
+      <ion-input type="text" [(ngModel)]="username"></ion-input>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label floating>Password</ion-label>
+      <ion-input type="password" [(ngModel)]="password"></ion-input>
+    </ion-item>
+  
+  </ion-list>
+
+<ion-list>
+  <button ion-item *ngFor="let item of fruits">
+    {{ item }}
+  </button>
+</ion-list>
+
+<ion-list>
+  <button ion-item *ngFor="let user of users">
+    {{ user.id }} {{ user.name }}
+  </button>
+</ion-list>
+
+</ion-content>
