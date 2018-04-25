@@ -13,6 +13,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { DetailPageModule } from '../pages/detail/detail.module';
 import { LoginPageModule } from '../pages/login/login.module';
 import { LoginProvider } from '../providers/login/login';
+import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { ProfilePageModule } from '../pages/profile/profile.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,8 @@ import { LoginProvider } from '../providers/login/login';
     DashboardPageModule,
     UsersPageModule,
     DetailPageModule,
-    LoginPageModule
+    LoginPageModule,
+    ProfilePageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -37,9 +41,11 @@ import { LoginProvider } from '../providers/login/login';
     StatusBar,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    { provide: 'API_URL', useValue: 'http://localhost:3000' },
+    { provide: 'API_URL', useValue: 'http://192.168.43.142:3000' },
     UserProvider,
-    LoginProvider
+    LoginProvider,
+    SQLite,
+    BarcodeScanner
   ]
 })
 export class AppModule { }
