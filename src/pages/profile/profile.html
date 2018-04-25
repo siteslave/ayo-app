@@ -9,7 +9,7 @@
   <ion-navbar color="purple">
     <ion-title>Profile</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="doScan()">
+      <button ion-button icon-only>
         <ion-icon name="person-add"></ion-icon>
       </button>
     </ion-buttons>
@@ -19,5 +19,11 @@
 
 
 <ion-content padding>
+
+<ion-fab right bottom>
+  <button ion-fab color="danger" (click)="doScan()">
+    <ion-icon name="add"></ion-icon>
+  </button>
+</ion-fab>
 
 </ion-content>
