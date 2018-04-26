@@ -37,7 +37,6 @@ export class ProfilePage {
   doScan() {
     if (this.cid) {
       this.barcodeScanner.scan().then(barcodeData => {
-        console.log('Barcode data', barcodeData);
         let alert = this.alertCtrl.create({
           title: 'สำเร็จ!',
           subTitle: 'ลงทะเบียนเสร็จเรียบร้อย : ' + barcodeData.text + '?cid=' + this.cid,
