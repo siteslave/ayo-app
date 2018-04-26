@@ -109,6 +109,9 @@ export class ProfilePage {
   }
 
   getProfile() {
+
+    this.profiles = [];
+    
     this.platform.ready().then(() => {
 
       this.sqlite.create({
@@ -124,7 +127,6 @@ export class ProfilePage {
           db.executeSql(sql, [])
             .then((res: any) => {
               let rows = res.rows;
-              console.log(rows);
               if (rows.length > 0) {
                 for (let i = 0; i < rows.length; i++) {
                   console.log(rows.item(i));
