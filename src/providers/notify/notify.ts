@@ -13,4 +13,9 @@ export class NotifyProvider {
     return this.http.post(apiUrl, { cid: cid });
   }
 
+  checkAuth(url: any, hn: any) {
+    let apiUrl = `${this.url}/notify/auth`;
+    return this.http.post(apiUrl, { hn: hn });
+  }
+
 }

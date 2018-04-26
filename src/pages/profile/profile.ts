@@ -236,5 +236,15 @@ export class ProfilePage {
     });
   }
 
+  checkAuth(item: any) {
+    this.notifyProvider.checkAuth(item.url, item.hn)
+      .subscribe((res: any) => {
+        if (res.ok) {
+          let token = res.token;
+          sessionStorage.setItem('token', token);
+          // go to next page
+        }
+       }, (error: any) => { });
+  }
 
 }

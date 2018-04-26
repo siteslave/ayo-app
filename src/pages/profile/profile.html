@@ -23,7 +23,7 @@
   <ion-list>
     <ion-item-divider color="light">โรงพยาบาลที่ขึ้นทะเบียน</ion-item-divider>
     <ion-item-sliding>
-      <button ion-item *ngFor="let item of profiles">
+      <button ion-item *ngFor="let item of profiles" (click)="checkAuth(item)">
         <h2>{{item.hospname}}</h2>
         <h3>รหัสประจำตัว: {{item.hn}}</h3>
       </button>
