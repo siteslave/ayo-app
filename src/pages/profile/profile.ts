@@ -194,10 +194,10 @@ export class ProfilePage {
 
           let sql = `
           INSERT INTO profile(hospcode, hospname, hn, url)
-          VALUES(?, ?, ?, url);
+          VALUES(?, ?, ?, ?);
           `;
-          console.log(this.hospcode, this.hospname, this.hn);
-          db.executeSql(sql, [this.hospcode, this.hospname, this.hn])
+          console.log(this.hospcode, this.hospname, this.hn, this.url);
+          db.executeSql(sql, [this.hospcode, this.hospname, this.hn, this.url])
             .then((res: any) => {
               // success
               console.log('Save success')
