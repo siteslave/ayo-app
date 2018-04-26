@@ -21,6 +21,10 @@ export class ProfilePage {
 
   cid: any;
   profiles: any = [];
+  hospcode: any;
+  hospname: any;
+  url: any;
+  hn: any;
 
   constructor(
     public navCtrl: NavController,
@@ -42,12 +46,17 @@ export class ProfilePage {
     if (this.cid) {
       this.barcodeScanner.scan().then(barcodeData => {
         if (barcodeData.text) {
-          this.notifyProvider.register(this.cid)
+          this.notifyProvider.register(barcodeData.text, this.cid)
             .subscribe((res: any) => {
               console.log(res);
               if (res.ok) {
                 console.log(res);
-                this.checkHospcode(res.hospcode, res.hospname, res.hn);
+                this.hospcode = res.hospcode;
+                this.hospname = res.hospname;
+                this.hn = res.hn;
+                this.url = barcodeData.text;
+              
+                this.checkHospcode();
               } else {
 
               }
@@ -89,7 +98,7 @@ export class ProfilePage {
         .then((db: SQLiteObject) => {
 
           let sql = `
-            SELECT cid FROM profile LIMIT 1;
+            SELECT cid FROM info LIMIT 1;
             `;
 
           db.executeSql(sql, [])
@@ -111,7 +120,7 @@ export class ProfilePage {
   getProfile() {
 
     this.profiles = [];
-    
+
     this.platform.ready().then(() => {
 
       this.sqlite.create({
@@ -145,7 +154,7 @@ export class ProfilePage {
     });
   }
 
-  checkHospcode(hospcode: any, hospname: any, hn: any) {
+  checkHospcode() {
     this.platform.ready().then(() => {
 
       this.sqlite.create({
@@ -156,15 +165,15 @@ export class ProfilePage {
 
           let sql = `SELECT * FROM profile WHERE hospcode=?;`;
 
-          db.executeSql(sql, [hospcode])
+          db.executeSql(sql, [this.hospcode])
             .then((res: any) => {
               let rows = res.rows;
               if (rows.length > 0) {
                 // update HN
-                this.updateRegister(this.cid, hospcode, hn);
+                this.updateRegister();
               } else {
                 // New record
-                this.saveRegister(this.cid, hospcode, hospname, hn);
+                this.saveRegister();
               }
             })
             .catch(e => console.log(e));
@@ -174,7 +183,7 @@ export class ProfilePage {
     });
   }
 
-  saveRegister(cid: any, hospcode: any, hospname: any, hn: any) {
+  saveRegister() {
     this.platform.ready().then(() => {
 
       this.sqlite.create({
@@ -184,11 +193,11 @@ export class ProfilePage {
         .then((db: SQLiteObject) => {
 
           let sql = `
-          INSERT INTO profile(cid, hospcode, hospname, hn)
-          VALUES(?, ?, ?, ?);
+          INSERT INTO profile(hospcode, hospname, hn, url)
+          VALUES(?, ?, ?, url);
           `;
-          console.log(hospcode, hospname, hn);
-          db.executeSql(sql, [cid, hospcode, hospname, hn])
+          console.log(this.hospcode, this.hospname, this.hn);
+          db.executeSql(sql, [this.hospcode, this.hospname, this.hn])
             .then((res: any) => {
               // success
               console.log('Save success')
@@ -201,7 +210,7 @@ export class ProfilePage {
     });
   }
 
-  updateRegister(cid: any, hospcode: any, hn: any) {
+  updateRegister() {
     this.platform.ready().then(() => {
 
       this.sqlite.create({
@@ -211,10 +220,10 @@ export class ProfilePage {
         .then((db: SQLiteObject) => {
 
           let sql = `
-          UPDATE profile SET hn=? WHERE cid=? AND hospcode=?;
+          UPDATE profile SET hn=?, url=? WHERE hospcode=?;
           `;
 
-          db.executeSql(sql, [hn, cid, hospcode])
+          db.executeSql(sql, [this.hn, this.url, this.hospcode])
             .then((res: any) => {
               // success
               console.log('Update success');

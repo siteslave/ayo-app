@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar color="purple">
-    <ion-title>Profile</ion-title>
+    <ion-title>ประวัติการรับยา</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="doRegister()">
         <ion-icon name="person-add"></ion-icon>
@@ -22,11 +22,19 @@
 
   <ion-list>
     <ion-item-divider color="light">โรงพยาบาลที่ขึ้นทะเบียน</ion-item-divider>
+    <ion-item-sliding>
+      <button ion-item *ngFor="let item of profiles">
+        <h2>{{item.hospname}}</h2>
+        <h3>รหัสประจำตัว: {{item.hn}}</h3>
+      </button>
+      <ion-item-options side="right">
+        <button ion-button color="danger">
+          <ion-icon name="trash"></ion-icon>
+          ลบรายการ
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
 
-    <button ion-item *ngFor="let item of profiles">
-      <h2>{{item.hospcode}} - {{item.hospname}}</h2>
-      <h3>HN: {{item.hn}}</h3>
-    </button>
   </ion-list>
 
 

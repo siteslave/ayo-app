@@ -8,8 +8,8 @@ export class NotifyProvider {
 
   }
 
-  register(cid: any) {
-    let url = `${this.url}/notify/register`;
+  register(url: any, cid: any) {
+    let apiUrl = `${this.url}/notify/register`;
     return this.http.post(url, { cid: cid });
   }
 

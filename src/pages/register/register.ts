@@ -32,11 +32,11 @@ export class RegisterPage {
           
           if (this.isUpdate) {
             sql = `
-            UPDATE profile SET cid=?;
+            UPDATE info SET cid=?;
             `;
           } else {
             sql = `
-            INSERT INTO profile(cid)
+            INSERT INTO info(cid)
             VALUES(?);
             `;
           }
@@ -64,7 +64,7 @@ export class RegisterPage {
         .then((db: SQLiteObject) => {
 
           let sql = `
-            SELECT cid FROM profile LIMIT 1;
+            SELECT cid FROM info LIMIT 1;
             `;
 
           db.executeSql(sql, [])
