@@ -30,6 +30,7 @@ export class MyApp {
         location: 'default'
       })
         .then((db: SQLiteObject) => {
+          // let sqlDelete = 'DROP TABLE IF EXISTS profile;';
           let sqlDelete = 'SELECT 1 as t;';
           let sql = `
               CREATE TABLE IF NOT EXISTS profile(

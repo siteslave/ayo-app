@@ -20,6 +20,7 @@ import { NotifyProvider } from '../../providers/notify/notify';
 export class ProfilePage {
 
   cid: any;
+  profiles: any = [];
 
   constructor(
     public navCtrl: NavController,
@@ -34,6 +35,7 @@ export class ProfilePage {
 
   ionViewWillEnter() {
     this.getCid();
+    this.getProfile();
   }
 
   doScan() {
@@ -44,6 +46,7 @@ export class ProfilePage {
             .subscribe((res: any) => {
               console.log(res);
               if (res.ok) {
+                console.log(res);
                 this.checkHospcode(res.hospcode, res.hospname, res.hn);
               } else {
 
@@ -105,6 +108,41 @@ export class ProfilePage {
     });
   }
 
+  getProfile() {
+    this.platform.ready().then(() => {
+
+      this.sqlite.create({
+        name: 'drugnotify.db',
+        location: 'default'
+      })
+        .then((db: SQLiteObject) => {
+
+          let sql = `
+            SELECT * FROM profile WHERE hospcode <> '' and hn <> '';
+            `;
+
+          db.executeSql(sql, [])
+            .then((res: any) => {
+              let rows = res.rows;
+              console.log(rows);
+              if (rows.length > 0) {
+                for (let i = 0; i < rows.length; i++) {
+                  console.log(rows.item(i));
+                  let obj: any = {};
+                  obj.hospcode = rows.item(i).hospcode;
+                  obj.hospname = rows.item(i).hospname;
+                  obj.hn = rows.item(i).hn;
+                  this.profiles.push(obj);
+                }
+              }
+            })
+            .catch(e => console.log(e));
+
+        })
+        .catch(e => console.log(e));
+    });
+  }
+
   checkHospcode(hospcode: any, hospname: any, hn: any) {
     this.platform.ready().then(() => {
 
@@ -147,11 +185,12 @@ export class ProfilePage {
           INSERT INTO profile(cid, hospcode, hospname, hn)
           VALUES(?, ?, ?, ?);
           `;
-
-          db.executeSql(sql, [cid, hospcode, hn])
+          console.log(hospcode, hospname, hn);
+          db.executeSql(sql, [cid, hospcode, hospname, hn])
             .then((res: any) => {
               // success
               console.log('Save success')
+              this.getProfile();
             })
             .catch(e => console.log(e));
 
@@ -176,7 +215,8 @@ export class ProfilePage {
           db.executeSql(sql, [hn, cid, hospcode])
             .then((res: any) => {
               // success
-              console.log('Update success')
+              console.log('Update success');
+              this.getProfile();
             })
             .catch(e => console.log(e));
 

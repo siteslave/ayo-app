@@ -18,12 +18,22 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
 
-<ion-fab right bottom>
-  <button ion-fab color="danger" (click)="doScan()">
-    <ion-icon name="add"></ion-icon>
-  </button>
-</ion-fab>
+  <ion-list>
+    <ion-item-divider color="light">โรงพยาบาลที่ขึ้นทะเบียน</ion-item-divider>
+
+    <button ion-item *ngFor="let item of profiles">
+      <h2>{{item.hospcode}} - {{item.hospname}}</h2>
+      <h3>HN: {{item.hn}}</h3>
+    </button>
+  </ion-list>
+
+
+  <ion-fab right bottom>
+    <button ion-fab color="danger" (click)="doScan()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
 
 </ion-content>
