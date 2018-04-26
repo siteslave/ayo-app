@@ -30,21 +30,24 @@ export class MyApp {
         location: 'default'
       })
         .then((db: SQLiteObject) => {
-
+          let sqlDelete = 'DROP TABLE IF EXISTS profile;';
           let sql = `
               CREATE TABLE IF NOT EXISTS profile(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 cid TEXT,
                 hn TEXT,
                 hospcode TEXT,
+                hospname TEXT,
                 url TEXT)
             `;
-
-          db.executeSql(sql, {})
-            .then(() => console.log('Executed SQL'))
-            .catch(e => console.log(e));
-
-
+          
+          db.executeSql(sqlDelete, {})
+            .then(() => {
+              db.executeSql(sql, {})
+                .then(() => console.log('Executed SQL'))
+                .catch(e => console.log(e));
+            })
+            .catch(() => { });
         })
         .catch(e => console.log(e));
 

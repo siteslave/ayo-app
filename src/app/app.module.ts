@@ -17,6 +17,7 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { ProfilePageModule } from '../pages/profile/profile.module';
 import { RegisterPageModule } from '../pages/register/register.module';
+import { NotifyProvider } from '../providers/notify/notify';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { RegisterPageModule } from '../pages/register/register.module';
     UserProvider,
     LoginProvider,
     SQLite,
-    BarcodeScanner
+    BarcodeScanner,
+    NotifyProvider
   ]
 })
 export class AppModule { }
