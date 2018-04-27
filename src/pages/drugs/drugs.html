@@ -15,4 +15,15 @@
 
 <ion-content padding>
 
+<ion-card *ngFor="let item of drugs">
+  <ion-card-header>
+    {{ item.drug_name }} #{{item.amount}}
+  </ion-card-header>
+  <ion-card-content>
+    <p>{{item.usage_line1}}</p>
+    <p>{{item.usage_line2}}</p>
+    <p>{{item.usage_line3}}</p>
+  </ion-card-content>
+</ion-card>
+
 </ion-content>
