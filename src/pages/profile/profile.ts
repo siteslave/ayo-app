@@ -4,6 +4,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { RegisterPage } from '../register/register';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { NotifyProvider } from '../../providers/notify/notify';
+import { DrugsPage } from '../drugs/drugs';
 
 /**
  * Generated class for the ProfilePage page.
@@ -243,6 +244,7 @@ export class ProfilePage {
           let token = res.token;
           sessionStorage.setItem('token', token);
           // go to next page
+          this.navCtrl.push(DrugsPage);
         }
        }, (error: any) => { });
   }

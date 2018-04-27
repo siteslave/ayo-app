@@ -18,6 +18,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { ProfilePageModule } from '../pages/profile/profile.module';
 import { RegisterPageModule } from '../pages/register/register.module';
 import { NotifyProvider } from '../providers/notify/notify';
+import { DrugsPageModule } from '../pages/drugs/drugs.module';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { NotifyProvider } from '../providers/notify/notify';
     DetailPageModule,
     LoginPageModule,
     ProfilePageModule,
-    RegisterPageModule
+    RegisterPageModule,
+    DrugsPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
