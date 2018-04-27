@@ -244,7 +244,7 @@ export class ProfilePage {
           let token = res.token;
           sessionStorage.setItem('token', token);
           // go to next page
-          this.navCtrl.push(DrugsPage);
+          this.navCtrl.push(DrugsPage, item);
         }
        }, (error: any) => { });
   }
